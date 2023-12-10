@@ -1,4 +1,8 @@
 
+.ruby-version
+
 .chat.md
 .openai.*
+
+.vim*
 
