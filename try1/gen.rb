@@ -46,7 +46,7 @@ class Svg
     @out << '>'
     if block
       @out << "\n"
-      block.call
+      instance_eval(&block)
       #@out << "\n"
     end
     @out << '</' << name << ">\n"
@@ -55,14 +55,14 @@ class Svg
   #
   # kabbatt
 
-  def draw_attribute(x, y, name, nam, &block)
+  def ability(x, y, name, nam, &block)
 
-    g(id: nam, class: 'attribute', &block)
+    g(id: nam, class: 'ability', &block)
   end
 end
 
 puts(
   Svg.new('100pt', '200pt') do
-    draw_attribute(10, 10, 'Strength', 'STR')
+    ability(10, 10, 'Strength', 'STR')
   end)
 
