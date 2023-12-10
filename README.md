@@ -1,7 +1,7 @@
 
 # kabbatt
 
-Exploring TTRPG attributes.
+Exploring TTRPG ~~attributes~~abilities.
 
 
 ## license
