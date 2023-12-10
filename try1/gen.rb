@@ -5,6 +5,32 @@
 
 require 'stringio'
 
+
+class Point
+
+  def initialize(x, y); @x = x; @y = y; end
+
+  def add!(x, y); @x += x;@y += y; self; end
+
+  def add(x, y); Point.new(@x + x, @y + y); end
+
+  def to_s; "#{@x},#{@y}"; end
+
+  def to_h(prefix='')
+
+    { "#{prefix}x" => @x, "#{prefix}y" => @y }
+  end
+end
+
+class Seq
+
+  def initialize; @a = []; end
+
+  def <<(e); @a << e; self; end
+
+  def to_s; @a.map(&:to_s).join(' '); end
+end
+
 class Svg
 
   #
@@ -17,8 +43,7 @@ class Svg
     @out <<
       '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' << "\n" <<
       '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" ' <<
-      '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' <<
-      "\n"
+      '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' << "\n"
 
     vb = vb || "0 0 #{w.to_i} #{h.to_i}"
 
@@ -37,7 +62,8 @@ class Svg
   def g(attributes={}, &block); tag('g', attributes, &block); end
   def circle(attributes={}, &block); tag('circle', attributes, &block); end
   def polygon(attributes={}, &block); tag('polygon', attributes, &block); end
-  def title(text, attributes={}); tag('title', attributes, text); end
+  def text(text, attributes={}); tag('text', attributes, text); end
+  def style(s); tag('style', {}, s); end
 
   def tag(name, attributes, text=nil, &block)
 
@@ -61,23 +87,52 @@ class Svg
   #
   # kabbatt
 
-  #<circle cx="100" cy="100" r="50" fill="blue" />
-  #<polygon points="100,50 150,100 100,150 50,100" fill="red" />
   def ability(x, y, name, nam)
 
-    r = 5
-    cx = x + r
-    cy = y + r
+    xy = Point.new(0, 0)
 
-    g(id: nam, class: 'ability') do
-      title(nam)
-      circle(cx: cx, cy: cy, r: r, fill: 'white', stroke: 'black')
+    cr = 13
+    c = xy.add(0, cr / 2 + 4)
+
+    ddx = 12
+    ddy = 15
+    d = xy.add(-ddx / 2 - 4, 0)
+    ds = Seq.new
+    ds << d.add(-ddx, 0) << d.add(0, ddy) << d.add(ddx, 0) << d.add(0, -ddy)
+
+    t = "translate(#{x} #{y})"
+
+    tp = xy.add(0, cr * 2 + 4)
+
+    g(id: name.downcase, class: 'ability', transform: t) do
+      circle(c.to_h('c').merge(r: cr))
+      polygon(points: ds)
+      #circle(xy.to_h('c').merge(id: 'xy', r: 2))
+      text(nam, tp.to_h.merge(class: 'label'))
     end
   end
 end
 
 puts(
   Svg.new('300pt', '300pt') do
+    style(%{
+      #xy { fill: red; stroke: red; stroke-width: 2pt; }
+      .ability circle {
+        fill: white;
+        stroke: lightgrey;
+        stroke-width: 3pt;
+      }
+      .ability polygon {
+        fill: white;
+        stroke: grey;
+        stroke-width: 3pt;
+      }
+      .ability .label {
+        font-family: Helvetica Neue;
+        font-size: 12pt;
+      }
+    })
     ability(100, 100, 'Strength', 'STR')
+    ability(200, 100, 'Intelligence', 'INT')
   end)
 
