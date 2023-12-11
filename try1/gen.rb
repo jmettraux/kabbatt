@@ -29,16 +29,28 @@ class Point
 end
 
 ABILITIES = {
-  'STR' => os(point: Point.new(100, 100), name: 'Strength', t: 'n'),
-  'INT' => os(point: Point.new(400, 100), name: 'Intelligence', t: 'n'),
-  'CON' => os(point: Point.new(100, 300), name: 'Constitution', t: 'n'),
-  'WIS' => os(point: Point.new(400, 300), name: 'Wisdom', t: 'e'),
-  'DEX' => os(point: Point.new(100, 500), name: 'Dexterity', t: 'n'),
-  'CHA' => os(point: Point.new(400, 500), name: 'Charisma', t: 'n'),
+  'STR' => os(point: Point.new(120, 100), name: 'Strength', t: 'n'),
+  'INT' => os(point: Point.new(420, 100), name: 'Intelligence', t: 'n'),
+  'CON' => os(point: Point.new(120, 300), name: 'Constitution', t: 'w'),
+  'WIS' => os(point: Point.new(420, 300), name: 'Wisdom', t: 'e'),
+  'DEX' => os(point: Point.new(120, 500), name: 'Dexterity', t: 'w'),
+  'CHA' => os(point: Point.new(420, 500), name: 'Charisma', t: 'e'),
 
-  'for' => os(point: Point.new(250, 100 - 30), name: 'fortitude', t: 'n'),
-  'wil' => os(point: Point.new(340, 180), name: 'will', t: 'n'),
-  'lea' => os(point: Point.new(400 + 30, 200), name: 'learning', t: 'e'),
+  'for' => os(point: Point.new(270,  70), name: 'fortitude', t: 'n'),
+  'wil' => os(point: Point.new(340, 160), name: 'will', t: 'n'),
+  'lea' => os(point: Point.new(450, 180), name: 'learning', t: 'e'),
+  'dri' => os(point: Point.new(190, 160), name: 'drive', t: 'e'),
+  'phy' => os(point: Point.new(100, 220), name: 'physical', t: 'w'),
+  'eva' => os(point: Point.new(320, 400), name: 'evasion', t: 'e'),
+  'wit' => os(point: Point.new(520, 270), name: 'wit', t: 'w'),
+  'pre' => os(point: Point.new(240, 400), name: 'presence', t: 'n'),
+  'per' => os(point: Point.new(270, 530), name: 'performance', t: 'n'),
+  'men' => os(point: Point.new(440, 370), name: 'mental', t: 'e'),
+  'end' => os(point: Point.new(270, 350), name: 'endurance', t: 'n'),
+  'imp' => os(point: Point.new(290, 250), name: 'impulse', t: 'e'),
+  'xxx' => os(point: Point.new(200, 450), name: 'xxx', t: 'n'),
+  'bal' => os(point: Point.new(100, 420), name: 'balance', t: 'e'),
+  'coo' => os(point: Point.new( 30, 320), name: 'balance', t: 'e'),
 }
 
 class Seq
@@ -126,6 +138,7 @@ class Svg
     ttr =
       case abi.t
       when 'e' then 'translate(19.5 30)'
+      when 'w' then 'translate(-53 30)'
       else ''
       end
 
@@ -196,6 +209,18 @@ path.link1 {
     link('STR', 'for', 'INT')
     link('STR', 'wil', 'WIS')
     link('INT', 'lea', 'WIS')
+    link('INT', 'dri', 'CON')
+    link('STR', 'phy', 'CON')
+    link('INT', 'eva', 'DEX')
+    link('INT', 'wit', 'CHA')
+    link('STR', 'pre', 'CHA')
+    link('DEX', 'per', 'CHA')
+    link('WIS', 'men', 'CHA')
+    link('CON', 'end', 'WIS')
+    link('WIS', 'imp', 'DEX')
+    link('CON', 'xxx', 'CHA')
+    link('CON', 'bal', 'DEX')
+    link('STR', 'coo', 'DEX')
 
     ABILITIES.each do |k, v|
       ability(k, v)
