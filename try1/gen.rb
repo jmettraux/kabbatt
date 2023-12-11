@@ -3,6 +3,7 @@
 # try1/gen.rb
 #
 
+require 'ostruct'
 require 'stringio'
 
 
@@ -16,11 +17,24 @@ class Point
 
   def to_s; "#{@x},#{@y}"; end
 
+  def to_translate_s; "translate(#{@x} #{@y})"; end
+
   def to_h(prefix='')
 
     { "#{prefix}x" => @x, "#{prefix}y" => @y }
   end
 end
+
+ABILITIES = {
+  'STR' => OpenStruct.new(point: Point.new(100, 100), name: 'Strength'),
+  'INT' => OpenStruct.new(point: Point.new(400, 100), name: 'Intelligence'),
+  'CON' => OpenStruct.new(point: Point.new(100, 300), name: 'Constitution'),
+  'WIS' => OpenStruct.new(point: Point.new(400, 300), name: 'Wisdom'),
+  'DEX' => OpenStruct.new(point: Point.new(100, 500), name: 'Dexterity'),
+  'CHA' => OpenStruct.new(point: Point.new(400, 500), name: 'Charisma'),
+
+  'for' => OpenStruct.new(point: Point.new(250, 100), name: 'fortitude'),
+}
 
 class Seq
 
@@ -62,6 +76,7 @@ class Svg
   def g(attributes={}, &block); tag('g', attributes, &block); end
   def circle(attributes={}, &block); tag('circle', attributes, &block); end
   def polygon(attributes={}, &block); tag('polygon', attributes, &block); end
+  def path(attributes={}, &block); tag('path', attributes, &block); end
   def text(text, attributes={}); tag('text', attributes, text); end
   def style(s); tag('style', {}, s); end
 
@@ -87,7 +102,7 @@ class Svg
   #
   # kabbatt
 
-  def ability(x, y, name, nam)
+  def ability(txy, name, nam)
 
     xy = Point.new(0, 0)
 
@@ -95,44 +110,61 @@ class Svg
     c = xy.add(0, cr / 2 + 4)
 
     ddx = 12
-    ddy = 15
-    d = xy.add(-ddx / 2 - 4, 0)
+    ddy = 17
+    d = xy.add(-ddx / 2 - 7, -3)
     ds = Seq.new
     ds << d.add(-ddx, 0) << d.add(0, ddy) << d.add(ddx, 0) << d.add(0, -ddy)
 
-    t = "translate(#{x} #{y})"
+    tp = xy.add(-3, -11);
 
-    tp = xy.add(0, cr * 2 + 4)
-
-    g(id: name.downcase, class: 'ability', transform: t) do
+    g(id: name.downcase, class: 'ability', transform: txy.to_translate_s) do
       circle(c.to_h('c').merge(r: cr))
       polygon(points: ds)
       #circle(xy.to_h('c').merge(id: 'xy', r: 2))
       text(nam, tp.to_h.merge(class: 'label'))
     end
   end
+
+  def link(key0, key1)
+
+    abi0 = ABILITIES[key0]
+    abi1 = ABILITIES[key1]
+
+    seq = Seq.new << 'M' << abi0.point << 'L' << abi1.point
+
+    path(d: seq, class: 'link', id: "#{key0}-#{key1}")
+  end
 end
 
 puts(
-  Svg.new('300pt', '300pt') do
+  Svg.new('1000pt', '1000pt') do
     style(%{
-      #xy { fill: red; stroke: red; stroke-width: 2pt; }
-      .ability circle {
-        fill: white;
-        stroke: lightgrey;
-        stroke-width: 3pt;
-      }
-      .ability polygon {
-        fill: white;
-        stroke: grey;
-        stroke-width: 3pt;
-      }
-      .ability .label {
-        font-family: Helvetica Neue;
-        font-size: 12pt;
-      }
+#xy { fill: red; stroke: red; stroke-width: 2pt; }
+path.link {
+  stroke: lightgrey;
+  stroke-width: 7pt;
+}
+.ability circle {
+  fill: white;
+  stroke: lightgrey;
+  stroke-width: 3pt;
+}
+.ability polygon {
+  fill: white;
+  stroke: #bfbfbf;
+  stroke-width: 3pt;
+}
+.ability .label {
+  color: grey;
+  font-family: Helvetica Neue;
+  font-size: 12pt;
+}
     })
-    ability(100, 100, 'Strength', 'STR')
-    ability(200, 100, 'Intelligence', 'INT')
+
+    link('STR', 'for'); link('for', 'INT')
+
+    ABILITIES.each do |k, v|
+      ability(v.point, v.name, k)
+    end
   end)
 
