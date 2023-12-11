@@ -130,9 +130,11 @@ class Svg
     abi0 = ABILITIES[key0]
     abi1 = ABILITIES[key1]
 
-    seq = Seq.new << 'M' << abi0.point << 'L' << abi1.point
+    seq = Seq.new <<
+      'M' << abi0.point.add(0, 7) << 'L' << abi1.point.add(0, 7)
 
-    path(d: seq, class: 'link', id: "#{key0}-#{key1}")
+    path(d: seq, class: 'link0', id: "#{key0}-#{key1}-0")
+    path(d: seq, class: 'link1', id: "#{key0}-#{key1}-1")
   end
 end
 
@@ -140,9 +142,17 @@ puts(
   Svg.new('1000pt', '1000pt') do
     style(%{
 #xy { fill: red; stroke: red; stroke-width: 2pt; }
-path.link {
+path.link0 {
   stroke: lightgrey;
-  stroke-width: 7pt;
+  stroke-width: 10pt;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+path.link1 {
+  stroke: white;
+  stroke-width: 4pt;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .ability circle {
   fill: white;
