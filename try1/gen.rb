@@ -9,6 +9,8 @@ require 'stringio'
 
 class Point
 
+  attr_reader :x, :y
+
   def initialize(x, y); @x = x; @y = y; end
 
   def add!(x, y); @x += x;@y += y; self; end
@@ -33,7 +35,9 @@ ABILITIES = {
   'DEX' => OpenStruct.new(point: Point.new(100, 500), name: 'Dexterity'),
   'CHA' => OpenStruct.new(point: Point.new(400, 500), name: 'Charisma'),
 
-  'for' => OpenStruct.new(point: Point.new(250, 100), name: 'fortitude'),
+  'for' => OpenStruct.new(point: Point.new(250, 100 - 30), name: 'fortitude'),
+  'wil' => OpenStruct.new(point: Point.new(340, 180), name: 'will'),
+  'lea' => OpenStruct.new(point: Point.new(400 + 30, 200), name: 'learning'),
 }
 
 class Seq
@@ -125,16 +129,24 @@ class Svg
     end
   end
 
-  def link(key0, key1)
+  def link(*ks)
 
-    abi0 = ABILITIES[key0]
-    abi1 = ABILITIES[key1]
+    abis = ks.map { |k| ABILITIES[k] }
+    pts = abis.map { |a| a.point }
 
-    seq = Seq.new <<
-      'M' << abi0.point.add(0, 7) << 'L' << abi1.point.add(0, 7)
+    seq = Seq.new
 
-    path(d: seq, class: 'link0', id: "#{key0}-#{key1}-0")
-    path(d: seq, class: 'link1', id: "#{key0}-#{key1}-1")
+    #if ks.size == 2
+    #  seq << 'M' << abis[0].point.add(0, 7) << 'L' << abis[1].point.add(0, 7)
+    #else
+    qp = Point.new(
+      pts[1].x * 2 - (pts[0].x + pts[2].x) / 2,
+      pts[1].y * 2 - (pts[0].y + pts[2].y) / 2)
+    seq << 'M' << pts[0].add(0, 7) << 'Q' << qp.add(0, 7) << pts[2].add(0, 7)
+    #end
+
+    path(d: seq, class: 'link0', id: ks.join('-') + '-0')
+    path(d: seq, class: 'link1', id: ks.join('-') + '-1')
   end
 end
 
@@ -147,12 +159,14 @@ path.link0 {
   stroke-width: 10pt;
   stroke-linecap: round;
   stroke-linejoin: round;
+  fill: none;
 }
 path.link1 {
   stroke: white;
   stroke-width: 4pt;
   stroke-linecap: round;
   stroke-linejoin: round;
+  fill: none;
 }
 .ability circle {
   fill: white;
@@ -171,7 +185,9 @@ path.link1 {
 }
     })
 
-    link('STR', 'for'); link('for', 'INT')
+    link('STR', 'for', 'INT')
+    link('STR', 'wil', 'WIS')
+    link('INT', 'lea', 'WIS')
 
     ABILITIES.each do |k, v|
       ability(v.point, v.name, k)
