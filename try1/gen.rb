@@ -122,7 +122,12 @@ class Svg
 
     tp = xy.add(-3, -11)
     tr = abi.point.to_translate_s
-    ttr = ''
+
+    ttr =
+      case abi.t
+      when 'e' then 'translate(19.5 30)'
+      else ''
+      end
 
     g(id: abi.name.downcase, class: 'ability', transform: tr) do
       circle(c.to_h('c').merge(r: cr))
