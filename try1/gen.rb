@@ -6,6 +6,7 @@
 require 'ostruct'
 require 'stringio'
 
+def os(h); OpenStruct.new(h); end
 
 class Point
 
@@ -28,16 +29,16 @@ class Point
 end
 
 ABILITIES = {
-  'STR' => OpenStruct.new(point: Point.new(100, 100), name: 'Strength'),
-  'INT' => OpenStruct.new(point: Point.new(400, 100), name: 'Intelligence'),
-  'CON' => OpenStruct.new(point: Point.new(100, 300), name: 'Constitution'),
-  'WIS' => OpenStruct.new(point: Point.new(400, 300), name: 'Wisdom'),
-  'DEX' => OpenStruct.new(point: Point.new(100, 500), name: 'Dexterity'),
-  'CHA' => OpenStruct.new(point: Point.new(400, 500), name: 'Charisma'),
+  'STR' => os(point: Point.new(100, 100), name: 'Strength', t: 'n'),
+  'INT' => os(point: Point.new(400, 100), name: 'Intelligence', t: 'n'),
+  'CON' => os(point: Point.new(100, 300), name: 'Constitution', t: 'n'),
+  'WIS' => os(point: Point.new(400, 300), name: 'Wisdom', t: 'e'),
+  'DEX' => os(point: Point.new(100, 500), name: 'Dexterity', t: 'n'),
+  'CHA' => os(point: Point.new(400, 500), name: 'Charisma', t: 'n'),
 
-  'for' => OpenStruct.new(point: Point.new(250, 100 - 30), name: 'fortitude'),
-  'wil' => OpenStruct.new(point: Point.new(340, 180), name: 'will'),
-  'lea' => OpenStruct.new(point: Point.new(400 + 30, 200), name: 'learning'),
+  'for' => os(point: Point.new(250, 100 - 30), name: 'fortitude', t: 'n'),
+  'wil' => os(point: Point.new(340, 180), name: 'will', t: 'n'),
+  'lea' => os(point: Point.new(400 + 30, 200), name: 'learning', t: 'e'),
 }
 
 class Seq
@@ -106,7 +107,7 @@ class Svg
   #
   # kabbatt
 
-  def ability(txy, name, nam)
+  def ability(key, abi)
 
     xy = Point.new(0, 0)
 
@@ -119,13 +120,15 @@ class Svg
     ds = Seq.new
     ds << d.add(-ddx, 0) << d.add(0, ddy) << d.add(ddx, 0) << d.add(0, -ddy)
 
-    tp = xy.add(-3, -11);
+    tp = xy.add(-3, -11)
+    tr = abi.point.to_translate_s
+    ttr = ''
 
-    g(id: name.downcase, class: 'ability', transform: txy.to_translate_s) do
+    g(id: abi.name.downcase, class: 'ability', transform: tr) do
       circle(c.to_h('c').merge(r: cr))
       polygon(points: ds)
       #circle(xy.to_h('c').merge(id: 'xy', r: 2))
-      text(nam, tp.to_h.merge(class: 'label'))
+      text(key, tp.to_h.merge(class: 'label', transform: ttr))
     end
   end
 
@@ -190,7 +193,7 @@ path.link1 {
     link('INT', 'lea', 'WIS')
 
     ABILITIES.each do |k, v|
-      ability(v.point, v.name, k)
+      ability(k, v)
     end
   end)
 
