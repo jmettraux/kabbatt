@@ -32,25 +32,25 @@ ABILITIES = {
   'STR' => os(point: Point.new(120, 100), name: 'Strength', t: 'N'),
   'INT' => os(point: Point.new(420, 100), name: 'Intelligence', t: 'N'),
   'CON' => os(point: Point.new(125, 300), name: 'Constitution', t: 'W'),
-  'WIS' => os(point: Point.new(415, 300), name: 'Wisdom', t: 'E'),
+  'WIS' => os(point: Point.new(425, 300), name: 'Wisdom', t: 'E'),
   'DEX' => os(point: Point.new(120, 500), name: 'Dexterity', t: 'W'),
   'CHA' => os(point: Point.new(420, 500), name: 'Charisma', t: 'E'),
 
   'for' => os(point: Point.new(270,  70), name: 'fortitude', t: 'n'),
   'wil' => os(point: Point.new(340, 160), name: 'will', t: 'n'),
-  'lea' => os(point: Point.new(450, 180), name: 'learning', t: 'e'),
+  'lea' => os(point: Point.new(455, 200), name: 'learning', t: 'w'),
   'dri' => os(point: Point.new(190, 160), name: 'drive', t: 'e'),
   'phy' => os(point: Point.new(100, 220), name: 'physical', t: 'w'),
-  'eva' => os(point: Point.new(320, 400), name: 'evasion', t: 'e'),
+  'eva' => os(point: Point.new(315, 400), name: 'evasion', t: 'e'),
   'wit' => os(point: Point.new(515, 270), name: 'wit', t: 'w'),
   'pre' => os(point: Point.new(240, 400), name: 'presence', t: 'n'),
   'per' => os(point: Point.new(270, 530), name: 'performance', t: 'n'),
-  'men' => os(point: Point.new(430, 380), name: 'mental', t: 'e'),
+  'men' => os(point: Point.new(440, 380), name: 'mental', t: 'w'),
   'end' => os(point: Point.new(270, 350), name: 'endurance', t: 'n'),
   'imp' => os(point: Point.new(275, 260), name: 'impulse', t: 'e'),
   'xxx' => os(point: Point.new(200, 450), name: 'xxx', t: 'n'),
-  'bal' => os(point: Point.new(100, 400), name: 'balance', t: 'e'),
-  'coo' => os(point: Point.new( 35, 275), name: 'balance', t: 'e'),
+  'bal' => os(point: Point.new(105, 400), name: 'balance', t: 'e'),
+  'coo' => os(point: Point.new( 35, 280), name: 'balance', t: 'e'),
 }
 
 class Seq
@@ -123,12 +123,12 @@ class Svg
 
     xy = Point.new(0, 0)
 
-    cr = 13
+    cr = 17
     c = xy.add(0, cr / 2 + 4)
 
-    ddx = 12
-    ddy = 17
-    d = xy.add(-ddx / 2 - 7, -3)
+    ddx = 17
+    ddy = 21
+    d = xy.add(-ddx / 2 - 8, -4)
     ds = Seq.new
     ds << d.add(-ddx, 0) << d.add(0, ddy) << d.add(ddx, 0) << d.add(0, -ddy)
 
@@ -176,7 +176,7 @@ class Svg
 end
 
 puts(
-  Svg.new('1000pt', '1000pt') do
+  Svg.new('600pt', '600pt') do
     style(%{
 #xy { fill: red; stroke: red; stroke-width: 2pt; }
 path.link0 {
