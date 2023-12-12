@@ -29,12 +29,12 @@ class Point
 end
 
 ABILITIES = {
-  'STR' => os(point: Point.new(120, 100), name: 'Strength', t: 'n'),
-  'INT' => os(point: Point.new(420, 100), name: 'Intelligence', t: 'n'),
-  'CON' => os(point: Point.new(120, 300), name: 'Constitution', t: 'w'),
-  'WIS' => os(point: Point.new(420, 300), name: 'Wisdom', t: 'e'),
-  'DEX' => os(point: Point.new(120, 500), name: 'Dexterity', t: 'w'),
-  'CHA' => os(point: Point.new(420, 500), name: 'Charisma', t: 'e'),
+  'STR' => os(point: Point.new(120, 100), name: 'Strength', t: 'N'),
+  'INT' => os(point: Point.new(420, 100), name: 'Intelligence', t: 'N'),
+  'CON' => os(point: Point.new(120, 300), name: 'Constitution', t: 'W'),
+  'WIS' => os(point: Point.new(420, 300), name: 'Wisdom', t: 'E'),
+  'DEX' => os(point: Point.new(120, 500), name: 'Dexterity', t: 'W'),
+  'CHA' => os(point: Point.new(420, 500), name: 'Charisma', t: 'E'),
 
   'for' => os(point: Point.new(270,  70), name: 'fortitude', t: 'n'),
   'wil' => os(point: Point.new(340, 160), name: 'will', t: 'n'),
@@ -137,10 +137,11 @@ class Svg
 
     ttr =
       case abi.t
-      when 'e' then 'translate(19.5 30)'
-      when 'w' then 'translate(-53 30)'
-      else ''
-      end
+      when 'E', 'e' then 'translate(19.5 30)'
+      when 'W' then 'translate(-53 30)'
+      when 'w' then 'translate(-41 30)'
+      when 'n' then 'translate(1 0)'
+      else ''; end
 
     g(id: abi.name.downcase, class: 'ability', transform: tr) do
       circle(c.to_h('c').merge(r: cr))
@@ -222,8 +223,6 @@ path.link1 {
     link('CON', 'bal', 'DEX')
     link('STR', 'coo', 'DEX')
 
-    ABILITIES.each do |k, v|
-      ability(k, v)
-    end
+    ABILITIES.each { |k, v| ability(k, v) }
   end)
 
