@@ -19,39 +19,34 @@ class Point
   def add(x, y); Point.new(@x + x, @y + y); end
 
   def to_s; "#{@x},#{@y}"; end
-
   def to_translate_s; "translate(#{@x} #{@y})"; end
-
-  def to_h(prefix='')
-
-    { "#{prefix}x" => @x, "#{prefix}y" => @y }
-  end
+  def to_h(prefix=''); { "#{prefix}x" => @x, "#{prefix}y" => @y }; end
 end
 
 ABILITIES = {
 
-  'STR' => os(point: Point.new(125, 100), t: 'N', name: 'Strength'),
-  'INT' => os(point: Point.new(425, 100), t: 'N', name: 'Intelligence'),
-  'CON' => os(point: Point.new(130, 300), t: 'W', name: 'Constitution'),
-  'WIS' => os(point: Point.new(430, 300), t: 'E', name: 'Wisdom'),
-  'DEX' => os(point: Point.new(125, 500), t: 'W', name: 'Dexterity'),
-  'CHA' => os(point: Point.new(425, 500), t: 'E', name: 'Charisma'),
+  'STR' => os(point: Point.new(125, 100), t:  'N', name: 'Strength'),
+  'INT' => os(point: Point.new(425, 100), t:  'N', name: 'Intelligence'),
+  'CON' => os(point: Point.new(130, 300), t:  'W', name: 'Constitution'),
+  'WIS' => os(point: Point.new(430, 300), t:  'E', name: 'Wisdom'),
+  'DEX' => os(point: Point.new(125, 500), t:  'W', name: 'Dexterity'),
+  'CHA' => os(point: Point.new(425, 500), t:  'E', name: 'Charisma'),
 
-  'for' => os(point: Point.new(275,  70), t: 'n', name: 'fortitude'),
-  'wil' => os(point: Point.new(345, 160), t: 'n', name: 'will'),
-  'lea' => os(point: Point.new(460, 200), t: 'w', name: 'learning'),
-  'dri' => os(point: Point.new(195, 160), t: 'e', name: 'drive'),
-  'phy' => os(point: Point.new(105, 220), t: 'w', name: 'physical'),
-  'eva' => os(point: Point.new(325, 400), t: 'e', name: 'evasion'),
-  'wit' => os(point: Point.new(525, 270), t: 'w', name: 'wit'),
-  'pre' => os(point: Point.new(235, 400), t: 'e', name: 'presence'),
-  'per' => os(point: Point.new(275, 530), t: 'n', name: 'performance'),
-  'men' => os(point: Point.new(455, 370), t: 'w', name: 'mental'),
-  'end' => os(point: Point.new(275, 350), t: 'n', name: 'endurance'),
-  'imp' => os(point: Point.new(265, 240), t: 'e', name: 'impulse'),
-  'xxx' => os(point: Point.new(325, 300), t: 'n', name: 'xxx'),
-  'bal' => os(point: Point.new(110, 380), t: 'e', name: 'balance'),
-  'coo' => os(point: Point.new( 40, 280), t: 'e', name: 'coordination'),
+  'for' => os(point: Point.new(275,  70), t:  'n', name: 'fortitude'),
+  'wil' => os(point: Point.new(345, 160), t:  'n', name: 'will'),
+  'lea' => os(point: Point.new(470, 200), t:  'w', name: 'learning'),
+  'dri' => os(point: Point.new(195, 160), t:  'e', name: 'drive'),
+  'phy' => os(point: Point.new(110, 205), t:  'w', name: 'physical'),
+  'eva' => os(point: Point.new(325, 400), t:  'e', name: 'evasion'),
+  'wit' => os(point: Point.new(520, 265), t:  'w', name: 'wit'),
+  'pre' => os(point: Point.new(235, 400), t:  'e', name: 'presence'),
+  'per' => os(point: Point.new(275, 530), t:  'n', name: 'performance'),
+  'men' => os(point: Point.new(460, 370), t:  'w', name: 'mental'),
+  'end' => os(point: Point.new(275, 350), t:  'n', name: 'endurance'),
+  'imp' => os(point: Point.new(265, 240), t:  'e', name: 'impulse'),
+  'xxx' => os(point: Point.new(325, 300), t:  'n', name: 'xxx'),
+  'bal' => os(point: Point.new(100, 370), t:  'e', name: 'balance'),
+  'coo' => os(point: Point.new( 40, 280), t: 'ne', name: 'coordination'),
 }
 
 class Seq
@@ -138,10 +133,11 @@ class Svg
 
     ttr =
       case abi.t
-      when 'E', 'e' then 'translate(19.5 30)'
-      when 'W' then 'translate(-53 30)'
-      when 'w' then 'translate(-41 30)'
-      when 'n' then 'translate(1 0)'
+      when 'E', 'e' then 'translate(23 29)'
+      when 'W'      then 'translate(-54 31)'
+      when 'w'      then 'translate(-45 38)'
+      when 'n'      then 'translate(1 0)'
+      when 'ne'     then 'translate(17 12)'
       else ''; end
 
     cs = 'ability'
