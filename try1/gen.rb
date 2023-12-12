@@ -209,22 +209,31 @@ path.link1 {
 }
     })
 
-    link('STR', 'for', 'INT')
-    link('STR', 'wil', 'WIS')
-    link('INT', 'lea', 'WIS')
-    link('INT', 'dri', 'CON')
-    link('STR', 'phy', 'CON')
-    link('INT', 'eva', 'DEX')
-    link('INT', 'wit', 'CHA')
-    link('STR', 'pre', 'CHA')
-    link('DEX', 'per', 'CHA')
-    link('WIS', 'men', 'CHA')
-    link('CON', 'end', 'WIS')
-    link('WIS', 'imp', 'DEX')
-    link('CON', 'xxx', 'CHA')
-    link('CON', 'bal', 'DEX')
-    link('STR', 'coo', 'DEX')
+    g(class: 'abilities') do
 
-    ABILITIES.each { |k, v| ability(k, v) }
+      g(class: 'links') do
+
+        link('STR', 'for', 'INT')
+        link('STR', 'wil', 'WIS')
+        link('INT', 'lea', 'WIS')
+        link('INT', 'dri', 'CON')
+        link('STR', 'phy', 'CON')
+        link('INT', 'eva', 'DEX')
+        link('INT', 'wit', 'CHA')
+        link('STR', 'pre', 'CHA')
+        link('DEX', 'per', 'CHA')
+        link('WIS', 'men', 'CHA')
+        link('CON', 'end', 'WIS')
+        link('WIS', 'imp', 'DEX')
+        link('CON', 'xxx', 'CHA')
+        link('CON', 'bal', 'DEX')
+        link('STR', 'coo', 'DEX')
+      end
+
+      g(class: 'abis') do
+
+        ABILITIES.each { |k, v| ability(k, v) }
+      end
+    end
   end)
 
