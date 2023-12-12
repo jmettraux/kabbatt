@@ -208,7 +208,7 @@ path.link1 {
 .ability.core polygon { stroke: grey; }
 .ability .label {
   color: grey;
-  font-family: Helvetica Neue;
+  font-family: monospace;
   font-size: 12pt;
 }
     })
