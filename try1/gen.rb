@@ -143,7 +143,10 @@ class Svg
       when 'n' then 'translate(1 0)'
       else ''; end
 
-    g(id: abi.name.downcase, class: 'ability', transform: tr) do
+    cs = 'ability'
+    cs += ' core' if key.match(/^[A-Z]+$/)
+
+    g(id: abi.name.downcase, class: cs, transform: tr) do
       circle(c.to_h('c').merge(r: cr))
       polygon(points: ds)
       #circle(xy.to_h('c').merge(id: 'xy', r: 2))
@@ -200,6 +203,8 @@ path.link1 {
   stroke: #bfbfbf;
   stroke-width: 3pt;
 }
+.ability.core circle { stroke: #9f9f9f; }
+.ability.core polygon { stroke: grey; }
 .ability .label {
   color: grey;
   font-family: Helvetica Neue;
