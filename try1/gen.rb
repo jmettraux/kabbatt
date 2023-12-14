@@ -27,25 +27,25 @@ ABILITIES = {
 
   'STR' => os(point: Point.new(125, 100), t:  'N', name: 'Strength'),
   'INT' => os(point: Point.new(425, 100), t:  'N', name: 'Intelligence'),
-  'CON' => os(point: Point.new(130, 300), t:  'W', name: 'Constitution'),
-  'WIS' => os(point: Point.new(430, 300), t:  'E', name: 'Wisdom'),
+  'CON' => os(point: Point.new(125, 300), t:  'W', name: 'Constitution'),
+  'WIS' => os(point: Point.new(435, 300), t:  'E', name: 'Wisdom'),
   'DEX' => os(point: Point.new(125, 500), t:  'W', name: 'Dexterity'),
   'CHA' => os(point: Point.new(425, 500), t:  'E', name: 'Charisma'),
 
   'for' => os(point: Point.new(275,  70), t:  'n', name: 'fortitude'),
-  'wil' => os(point: Point.new(345, 160), t:  'n', name: 'will'),
+  'wil' => os(point: Point.new(355, 160), t:  'n', name: 'will'),
   'lea' => os(point: Point.new(470, 200), t:  'w', name: 'learning'),
-  'dri' => os(point: Point.new(195, 160), t:  'e', name: 'drive'),
+  'dri' => os(point: Point.new(205, 160), t:  'e', name: 'drive'),
   'phy' => os(point: Point.new(110, 205), t:  'w', name: 'physical'),
   'eva' => os(point: Point.new(325, 400), t:  'e', name: 'evasion'),
   'wit' => os(point: Point.new(520, 265), t:  'w', name: 'wit'),
-  'pre' => os(point: Point.new(235, 400), t:  'e', name: 'presence'),
+  'pre' => os(point: Point.new(230, 400), t:  'e', name: 'presence'),
   'per' => os(point: Point.new(275, 530), t:  'n', name: 'performance'),
   'men' => os(point: Point.new(460, 370), t:  'w', name: 'mental'),
   'end' => os(point: Point.new(275, 350), t:  'n', name: 'endurance'),
   'imp' => os(point: Point.new(265, 240), t:  'e', name: 'impulse'),
   'xxx' => os(point: Point.new(325, 300), t:  'n', name: 'xxx'),
-  'bal' => os(point: Point.new(100, 370), t:  'e', name: 'balance'),
+  'bal' => os(point: Point.new(105, 365), t:  'e', name: 'balance'),
   'coo' => os(point: Point.new( 40, 280), t: 'ne', name: 'coordination'),
 }
 
@@ -119,12 +119,12 @@ class Svg
 
     xy = Point.new(0, 0)
 
-    cr = 17
+    cr = 19
     c = xy.add(0, cr / 2 + 4)
 
-    ddx = 17
-    ddy = 21
-    d = xy.add(-ddx / 2 - 8, -4)
+    ddx = 20
+    ddy = 24
+    d = xy.add(-ddx / 2 - 8, -6)
     ds = Seq.new
     ds << d.add(-ddx, 0) << d.add(0, ddy) << d.add(ddx, 0) << d.add(0, -ddy)
 
