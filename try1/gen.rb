@@ -42,7 +42,7 @@ ABILITIES = [
   os(point: Point.new(dx + 110, dy + 205), t:  'w', name: 'physical'),
   os(point: Point.new(dx + 325, dy + 400), t:  'e', name: 'evasion'),
   os(point: Point.new(dx + 520, dy + 265), t:  'w', name: 'wit'),
-  os(point: Point.new(dx + 230, dy + 400), t:  'e', name: 'presence'),
+  os(point: Point.new(dx + 230, dy + 400), t:  'n', name: 'presence'),
   os(point: Point.new(dx + 275, dy + 530), t:  'n', name: 'performance'),
   os(point: Point.new(dx + 460, dy + 370), t:  'w', name: 'mental'),
   os(point: Point.new(dx + 275, dy + 350), t:  'n', name: 'endurance'),
@@ -140,11 +140,12 @@ class Svg
 
     ttr =
       case abi.t
-      when 'E', 'e' then 'translate(23 29)'
-      when 'W'      then 'translate(-54 31)'
-      when 'w'      then 'translate(-45 38)'
-      when 'n'      then 'translate(1 0)'
-      when 'ne'     then 'translate(17 12)'
+      when 'E', 'e' then 'translate( 25  29)'
+      when 'W'      then 'translate(-56  31)'
+      when 'N'      then 'translate(  3  -1)'
+      when 'w'      then 'translate(-46  38)'
+      when 'n'      then 'translate(  2  -3)'
+      when 'ne'     then 'translate( 18  11)'
       else ''; end
 
     cs = 'ability'
