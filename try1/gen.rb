@@ -23,31 +23,38 @@ class Point
   def to_h(prefix=''); { "#{prefix}x" => @x, "#{prefix}y" => @y }; end
 end
 
-ABILITIES = {
+dx = 5
+dy = -30
+  #
+ABILITIES = [
 
-  'STR' => os(point: Point.new(125, 100), t:  'N', name: 'Strength'),
-  'INT' => os(point: Point.new(425, 100), t:  'N', name: 'Intelligence'),
-  'CON' => os(point: Point.new(125, 300), t:  'W', name: 'Constitution'),
-  'WIS' => os(point: Point.new(435, 300), t:  'E', name: 'Wisdom'),
-  'DEX' => os(point: Point.new(125, 500), t:  'W', name: 'Dexterity'),
-  'CHA' => os(point: Point.new(425, 500), t:  'E', name: 'Charisma'),
+  os(point: Point.new(dx + 125, dy + 100), t:  'N', name: 'Strength'),
+  os(point: Point.new(dx + 425, dy + 100), t:  'N', name: 'Intelligence'),
+  os(point: Point.new(dx + 125, dy + 300), t:  'W', name: 'Constitution'),
+  os(point: Point.new(dx + 435, dy + 300), t:  'E', name: 'Wisdom'),
+  os(point: Point.new(dx + 125, dy + 500), t:  'W', name: 'Dexterity'),
+  os(point: Point.new(dx + 425, dy + 500), t:  'E', name: 'Charisma'),
 
-  'for' => os(point: Point.new(275,  70), t:  'n', name: 'fortitude'),
-  'wil' => os(point: Point.new(355, 160), t:  'n', name: 'will'),
-  'lea' => os(point: Point.new(470, 200), t:  'w', name: 'learning'),
-  'dri' => os(point: Point.new(205, 160), t:  'e', name: 'drive'),
-  'phy' => os(point: Point.new(110, 205), t:  'w', name: 'physical'),
-  'eva' => os(point: Point.new(325, 400), t:  'e', name: 'evasion'),
-  'wit' => os(point: Point.new(520, 265), t:  'w', name: 'wit'),
-  'pre' => os(point: Point.new(230, 400), t:  'e', name: 'presence'),
-  'per' => os(point: Point.new(275, 530), t:  'n', name: 'performance'),
-  'men' => os(point: Point.new(460, 370), t:  'w', name: 'mental'),
-  'end' => os(point: Point.new(275, 350), t:  'n', name: 'endurance'),
-  'imp' => os(point: Point.new(265, 240), t:  'e', name: 'impulse'),
-  'xxx' => os(point: Point.new(325, 300), t:  'n', name: 'xxx'),
-  'bal' => os(point: Point.new(105, 365), t:  'e', name: 'balance'),
-  'coo' => os(point: Point.new( 40, 280), t: 'ne', name: 'coordination'),
-}
+  os(point: Point.new(dx + 275, dy +  70), t:  'n', name: 'fortitude'),
+  os(point: Point.new(dx + 355, dy + 160), t:  'n', name: 'will'),
+  os(point: Point.new(dx + 470, dy + 200), t:  'w', name: 'learning'),
+  os(point: Point.new(dx + 205, dy + 160), t:  'e', name: 'drive'),
+  os(point: Point.new(dx + 110, dy + 205), t:  'w', name: 'physical'),
+  os(point: Point.new(dx + 325, dy + 400), t:  'e', name: 'evasion'),
+  os(point: Point.new(dx + 520, dy + 265), t:  'w', name: 'wit'),
+  os(point: Point.new(dx + 230, dy + 400), t:  'e', name: 'presence'),
+  os(point: Point.new(dx + 275, dy + 530), t:  'n', name: 'performance'),
+  os(point: Point.new(dx + 460, dy + 370), t:  'w', name: 'mental'),
+  os(point: Point.new(dx + 275, dy + 350), t:  'n', name: 'endurance'),
+  os(point: Point.new(dx + 265, dy + 240), t:  'e', name: 'impulse'),
+  os(point: Point.new(dx + 325, dy + 300), t:  'n', name: 'xxx'),
+  os(point: Point.new(dx + 105, dy + 365), t:  'e', name: 'balance'),
+  os(point: Point.new(dx +  40, dy + 280), t: 'ne', name: 'coordination'),
+    ].inject({}) { |h, a|
+      k = a.name[0, 3]
+      k = k.upcase if k.match?(/^[A-Z]/)
+      h[k] = a
+      h }
 
 class Seq
 
